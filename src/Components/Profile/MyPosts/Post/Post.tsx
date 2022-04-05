@@ -1,6 +1,6 @@
 import clases from "./Post.module.css";
 import React from "react";
-import myPosts from "../MyPosts";
+
 
 type PostPropsType = {
     message: string
