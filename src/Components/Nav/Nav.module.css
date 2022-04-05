@@ -3,10 +3,11 @@
     background-color: burlywood;
 }
 
-.item {
+.item a{
     color: white;
+    text-decoration: none;
 }
 
-.item.active {
+.item a.active {
     color: gold;
 }
