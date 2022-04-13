@@ -1,18 +1,11 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
+import { PostDataType} from '../../../index';
 
 
 
-export type PostDataType = {
-    postData:Array<ArrayPropsType>
-}
 
-export type ArrayPropsType = {
-    id: number
-    message:string
-    likesCount: number
-}
 
 const MyPosts = (props: PostDataType) => {
     return (
