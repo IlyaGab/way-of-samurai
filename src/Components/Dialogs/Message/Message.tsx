@@ -1,11 +1,20 @@
 import clases from '../Dialogs.module.css';
 import React from 'react';
-import {MessageProps} from '../Dialogs';
+import {MessagesType} from '../../../redux/state';
 
-const Message = (props: MessageProps) => {
+type MessagePropsType = {
+    messages: Array<MessagesType>
+}
+
+const Message = (props: MessagePropsType) => {
     return (
-        <div className={clases.message}>{props.message}</div>
+        <div>
+            {props.messages.map((el) => {
+                return <div className={clases.message}>{el.message}</div>
+            })}
+        </div>
     )
 }
+
 
 export default Message

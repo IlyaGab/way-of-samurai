@@ -1,13 +1,15 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import { PostDataType} from '../../../index';
+import {PostType, ProfilePageType} from '../../../redux/state';
 
 
+type MyPostsType = {
+    postData: Array<PostType>
+}
 
-
-
-const MyPosts = (props: PostDataType) => {
+const MyPosts = (props: MyPostsType) => {
+    let postData = props.postData
     return (
         <div>
             <div className={clases.postsBlock}>
@@ -25,11 +27,7 @@ const MyPosts = (props: PostDataType) => {
                 </div>
             </div>
             <div className={clases.posts}>
-                {props.postData.map((p) => {
-                    return (
-                        <Post message={p.message} likesCount={p.likesCount}/>
-                    )
-                })}
+                        <Post postData={postData} />
             </div>
         </div>
     )
