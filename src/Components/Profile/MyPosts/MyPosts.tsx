@@ -1,7 +1,7 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostType, ProfilePageType} from '../../../redux/state';
+import {PostType} from '../../../redux/state';
 
 
 type MyPostsType = {
@@ -10,6 +10,15 @@ type MyPostsType = {
 
 const MyPosts = (props: MyPostsType) => {
     let postData = props.postData
+
+    const newPostElement:any = React.createRef()
+
+
+    const addPost = () => {
+        let text = newPostElement.current.value
+        alert(text)
+    }
+
     return (
         <div>
             <div className={clases.postsBlock}>
@@ -17,10 +26,10 @@ const MyPosts = (props: MyPostsType) => {
             </div>
             <div>
                 <div>
-                    <textarea></textarea>
+                    <textarea ref={newPostElement} ></textarea>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
                 <div>
                     <button>Remove post</button>
