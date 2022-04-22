@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
 import {PostType} from '../../../redux/state';
@@ -6,6 +6,7 @@ import {PostType} from '../../../redux/state';
 
 type MyPostsType = {
     postData: Array<PostType>
+    addPost:(postMessage:string)=>void
 }
 
 const MyPosts = (props: MyPostsType) => {
@@ -13,10 +14,10 @@ const MyPosts = (props: MyPostsType) => {
 
     const newPostElement:any = React.createRef()
 
-
     const addPost = () => {
         let text = newPostElement.current.value
-        alert(text)
+        props.addPost(text)
+        newPostElement.current.value = ('')
     }
 
     return (

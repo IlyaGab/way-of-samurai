@@ -1,4 +1,4 @@
-
+import {rerenderEntireTree} from '../render';
 
 export type DialogsType = {
     id: number
@@ -53,5 +53,13 @@ let state = {
         ],
     },
 };
+
+
+
+export let addPost = (postMessage:string) => {
+    let newPost = {id:5, message: postMessage, likesCount: 0};
+    state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
+}
 
 export default state

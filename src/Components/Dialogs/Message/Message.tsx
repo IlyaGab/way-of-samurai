@@ -25,7 +25,7 @@ const Message = (props: MessagePropsType) => {
             })}
             <div>
                 <textarea ref={newMessageElement}></textarea>
-                <button onClick={addMessage}> add</button>
+                <button onClick={addMessage}> addMessage</button>
             </div>
 
         </div>
