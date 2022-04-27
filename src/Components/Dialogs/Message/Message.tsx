@@ -4,17 +4,19 @@ import {MessagesType} from '../../../redux/state';
 
 type MessagePropsType = {
     messages: Array<MessagesType>
-    addMessage: (userMessage:string)=>void
+    addMessage: (userMessage: string) => void
 }
 
 const Message = (props: MessagePropsType) => {
 
-    const newMessageElement:any = React.createRef()
+    const newMessageElement = React.createRef<HTMLTextAreaElement>()
 
-    const addMessage = ()=> {
-        let text = newMessageElement.current.value
-        props.addMessage(text)
-        newMessageElement.current.value = (' ')
+    const addMessage = () => {
+        if (newMessageElement.current) {
+            let text = newMessageElement.current.value
+            props.addMessage(text)
+            newMessageElement.current.value = (' ')
+        }
     }
 
     return (

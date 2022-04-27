@@ -7,21 +7,23 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import { RootStateType} from './redux/state';
+import {RootStateType, updateNewPostText} from './redux/state';
 import Dialogs from './Components/Dialogs/Dialogs';
 
 
 
 type AppPageProps = {
     appState:RootStateType
-    addPost: (postMessage:string)=>void
+    addPost: ()=>void
     addMessage: (userMessage:string)=>void
+    updateNewPostText: (newText:string)=>void
 }
 
 
 
 function App(props:AppPageProps) {
     let postData = props.appState.profilePage.posts
+    let newPostText = props.appState.profilePage.newPostText
     let dialogs = props.appState.dialogsPage.dialogs
     let messages = props.appState.dialogsPage.messages
 
@@ -32,7 +34,7 @@ function App(props:AppPageProps) {
                 <Navigation/>
                 <div className="app-wrapper-content">
                         <Route path='/dialogs' render={()=>(<Dialogs dialogs={dialogs} messages={messages} addMessage={props.addMessage} />)} />
-                        <Route path='/profile'  render={()=>(<Profile postData={postData} addPost={props.addPost}/>)}  />
+                        <Route path='/profile'  render={()=>(<Profile postData={postData} newPostText={newPostText} addPost={props.addPost} updateNewPostText={props.updateNewPostText} />)}  />
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
                         <Route path='/settings' component={Settings}/>
