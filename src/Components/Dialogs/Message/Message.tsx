@@ -4,6 +4,7 @@ import {MessagesType} from '../../../redux/state';
 
 type MessagePropsType = {
     messages: Array<MessagesType>
+    addMessage: (userMessage:string)=>void
 }
 
 const Message = (props: MessagePropsType) => {
@@ -12,15 +13,15 @@ const Message = (props: MessagePropsType) => {
 
     const addMessage = ()=> {
         let text = newMessageElement.current.value
-        alert(text)
+        props.addMessage(text)
+        newMessageElement.current.value = (' ')
     }
 
     return (
         <div>
             {props.messages.map((el) => {
-                return <div className={clases.message}>
+                return <div key={el.id} className={clases.message}>
                     {el.message}
-
                 </div>
             })}
             <div>

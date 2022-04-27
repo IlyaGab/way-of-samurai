@@ -15,6 +15,7 @@ import Dialogs from './Components/Dialogs/Dialogs';
 type AppPageProps = {
     appState:RootStateType
     addPost: (postMessage:string)=>void
+    addMessage: (userMessage:string)=>void
 }
 
 
@@ -30,7 +31,7 @@ function App(props:AppPageProps) {
                 <Header/>
                 <Navigation/>
                 <div className="app-wrapper-content">
-                        <Route path='/dialogs' render={()=>(<Dialogs dialogs={dialogs} messages={messages} />)} />
+                        <Route path='/dialogs' render={()=>(<Dialogs dialogs={dialogs} messages={messages} addMessage={props.addMessage} />)} />
                         <Route path='/profile'  render={()=>(<Profile postData={postData} addPost={props.addPost}/>)}  />
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>

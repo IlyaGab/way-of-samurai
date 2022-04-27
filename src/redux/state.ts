@@ -56,9 +56,15 @@ let state = {
 
 
 
-export let addPost = (postMessage:string) => {
+export let addPost = (postMessage:string ) => {
     let newPost = {id:5, message: postMessage, likesCount: 0};
     state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
+}
+
+export let addMessage = (userMessage:string)=> {
+    let newMessage = {id:6, message: userMessage}
+    state.dialogsPage.messages.push(newMessage)
     rerenderEntireTree(state)
 }
 
