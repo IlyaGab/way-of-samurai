@@ -7,7 +7,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {RootStateType, updateNewPostText} from './redux/state';
+import {RootStateType} from './redux/state';
 import Dialogs from './Components/Dialogs/Dialogs';
 
 
