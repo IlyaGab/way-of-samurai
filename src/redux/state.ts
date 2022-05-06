@@ -1,8 +1,9 @@
 let ADD_POST = 'ADD-POST'
 let UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-POST-TEXT'
 let ADD_MESSAGE = 'ADD-MESSAGE'
+let UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE'
 
-let store:StoreTypes = {
+let store: StoreTypes = {
     _state: {
         profilePage: {
             posts: [
@@ -26,7 +27,9 @@ let store:StoreTypes = {
                 {id: 2, message: 'How is your IT-KAMASUTRA?'},
                 {id: 3, message: 'Yo'}
             ],
+            newMessageBody:' '
         },
+
     },
     _callSubscriber() {
         console.log('State changed')
@@ -40,18 +43,21 @@ let store:StoreTypes = {
     },
 
     dispatch(action: any) {
-        debugger
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0};
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = '';
             this._callSubscriber()
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_TEXT_POST) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber()
-        } else if (action.type === 'ADD-MESSAGE') {
-            let newMessage = {id: 6, message: action.userMessage}
+        } else if (action.type === ADD_MESSAGE) {
+            let newMessage = {id: 6, message: this._state.dialogsPage.newMessageBody}
             this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageBody = ''
+            this._callSubscriber()
+        } else if (action.type === UPDATE_NEW_MESSAGE){
+            this._state.dialogsPage.newMessageBody = action.userMessage
             this._callSubscriber()
         }
     }
@@ -62,12 +68,13 @@ type StoreTypes = {
     _callSubscriber: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    dispatch: (action:ActionsTypes )=>void
+    dispatch: (action: ActionsTypes) => void
 }
 
-export type ActionsTypes = ReturnType<typeof addPostActionCreator > | ReturnType<typeof addMessageActionCreator> | ReturnType<typeof updateNewPostActionCreator>
-
-
+export type ActionsTypes =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof addMessageActionCreator>
+    | ReturnType<typeof updateNewPostActionCreator>
 
 export type DialogsType = {
     id: number
@@ -89,27 +96,34 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
+    newMessageBody:string
 }
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
 }
 
-export const addPostActionCreator = ()=> {
+export const addPostActionCreator = () => {
     return {
         type: ADD_POST
     } as const
 }
-export const updateNewPostActionCreator = (text:string)=> {
+export const updateNewPostActionCreator = (text: string) => {
     return {
-        type:UPDATE_NEW_TEXT_POST, newText: text
+        type: UPDATE_NEW_TEXT_POST, newText: text
+    } as const
+}
+export const addMessageActionCreator = () => {
+    return {
+        type: ADD_MESSAGE
     } as const
 }
 
-export const addMessageActionCreator = (userMessage:string)=>{
+export const updateNewMessageActionCreator = (userMessage:string) => {
     return {
-        type: ADD_MESSAGE, userMessage:userMessage
+        type: UPDATE_NEW_MESSAGE, userMessage: userMessage
     } as const
 }
+
 export default store
 

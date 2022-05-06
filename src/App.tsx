@@ -17,20 +17,19 @@ type AppPageProps = {
     dispatch:(action:ActionsTypes)=> void
 }
 
-
-
 function App(props:AppPageProps) {
     let postData = props.appState.profilePage.posts
     let newPostText = props.appState.profilePage.newPostText
     let dialogs = props.appState.dialogsPage.dialogs
     let messages = props.appState.dialogsPage.messages
+    let newMessageBody = props.appState.dialogsPage.newMessageBody
 
     return (
             <div className="app-wrapper">
                 <Header/>
                 <Navigation/>
                 <div className="app-wrapper-content">
-                        <Route path='/dialogs' render={()=>(<Dialogs dialogs={dialogs} messages={messages} dispatch={props.dispatch} />)} />
+                        <Route path='/dialogs' render={()=>(<Dialogs dialogs={dialogs} messages={messages} newMessageBody={newMessageBody}  dispatch={props.dispatch} />)} />
                         <Route path='/profile'  render={()=>(<Profile postData={postData} newPostText={newPostText} dispatch={props.dispatch}  />)}  />
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
