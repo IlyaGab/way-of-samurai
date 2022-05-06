@@ -1,5 +1,5 @@
 let store = {
-    _state:{
+    _state: {
         profilePage: {
             posts: [
                 {id: 1, message: 'Hi, how are you?', likesCount: 12},
@@ -7,7 +7,7 @@ let store = {
                 {id: 3, message: 'blabla', likesCount: 11},
                 {id: 4, message: 'fafa', likesCount: 11}
             ],
-            newPostText:'it-kamasutra'
+            newPostText: 'it-kamasutra'
         },
         dialogsPage: {
             dialogs: [
@@ -24,35 +24,43 @@ let store = {
             ],
         },
     },
-    getState(){
-        return this._state
-    },
-     _callSubscriber  (state:RootStateType)  {
+    _callSubscriber(state: RootStateType) {
         console.log('State changed')
     },
-    addPost ( )  {
-        let newPost = {id:5, message: this._state.profilePage.newPostText, likesCount: 0};
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber (this._state)
+
+    getState() {
+        return this._state
     },
-    addMessage(userMessage:string) {
-        let newMessage = {id:6, message: userMessage}
+    subscribe(observer: ObserverType) {
+        this._callSubscriber = observer
+    },
+
+    addMessage(userMessage: string) {
+        let newMessage = {id: 6, message: userMessage}
         this._state.dialogsPage.messages.push(newMessage)
-        this._callSubscriber ( this._state)
+        this._callSubscriber(this._state)
     },
-    updateNewPostText (newText:string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber ( this._state)
-    },
-    subscribe (observer:ObserverType) {
-        this._callSubscriber  = observer
-    },
+
+    dispatch(action: any ){
+        debugger
+        if(action.type === "ADD-POST"){
+            let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0};
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT'){
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        } else if (action.type === 'ADD-MESSAGE'){
+            let newMessage = {id: 6, message: action.userMessage}
+            this._state.dialogsPage.messages.push(newMessage)
+            this._callSubscriber(this._state)
+        }
+    }
 }
 
 
-
-type ObserverType = (state:RootStateType)=>void
+type ObserverType = (state: RootStateType) => void
 
 export type DialogsType = {
     id: number
@@ -71,11 +79,11 @@ export type PostType = {
 }
 
 export type ProfilePageType = {
-    posts:Array<PostType>
+    posts: Array<PostType>
     newPostText: string
 }
 export type DialogPageType = {
-    dialogs:Array<DialogsType>
+    dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
 
@@ -83,8 +91,6 @@ export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
 }
-
-
 
 
 export default store

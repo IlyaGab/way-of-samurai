@@ -7,8 +7,7 @@ import {PostType, ProfilePageType} from '../../redux/state';
 type ProfileProps = {
     postData: Array<PostType>
     newPostText:string
-    addPost: ()=>void
-    updateNewPostText: (newText:string)=>void
+    dispatch:(action:any)=>void
 }
 
 
@@ -18,7 +17,7 @@ const Profile = (props:ProfileProps) => {
     return (
         <div className={clases.content}>
             <ProfileInfo />
-            <MyPosts postData={postData} addPost={props.addPost} newPostText={newPostText} updateNewPostText={props.updateNewPostText}/>
+            <MyPosts postData={postData} dispatch={props.dispatch} newPostText={newPostText} />
         </div>
 
     )
