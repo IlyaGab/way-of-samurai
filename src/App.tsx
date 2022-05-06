@@ -3,18 +3,18 @@ import './App.css';
 import Header from './Components/Header/Header';
 import Navigation from './Components/Nav/Nav';
 import Profile from './Components/Profile/Profile';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {RootStateType} from './redux/state';
+import {ActionsTypes, RootStateType} from './redux/state';
 import Dialogs from './Components/Dialogs/Dialogs';
 
 
 
 type AppPageProps = {
     appState:RootStateType
-    dispatch:(action:any)=> void
+    dispatch:(action:ActionsTypes)=> void
 }
 
 

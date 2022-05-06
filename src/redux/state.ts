@@ -1,4 +1,4 @@
-let store = {
+let store:StoreTypes = {
     _state: {
         profilePage: {
             posts: [
@@ -24,55 +24,67 @@ let store = {
             ],
         },
     },
-    _callSubscriber(state: RootStateType) {
+    _callSubscriber() {
         console.log('State changed')
     },
 
     getState() {
         return this._state
     },
-    subscribe(observer: ObserverType) {
+    subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
 
-
-    dispatch(action: any ){
+    dispatch(action: any) {
         debugger
-        if(action.type === "ADD-POST"){
+        if (action.type === 'ADD-POST') {
             let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0};
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT'){
+            this._callSubscriber()
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        } else if (action.type === 'ADD-MESSAGE'){
+            this._callSubscriber()
+        } else if (action.type === 'ADD-MESSAGE') {
             let newMessage = {id: 6, message: action.userMessage}
             this._state.dialogsPage.messages.push(newMessage)
-            this._callSubscriber(this._state)
+            this._callSubscriber()
         }
     }
 }
 
-
-type ObserverType = (state: RootStateType) => void
-
+type StoreTypes = {
+    _state: RootStateType
+    _callSubscriber: () => void
+    getState: () => RootStateType
+    subscribe: (observer: () => void) => void
+    dispatch: (action:ActionsTypes )=>void
+}
+export type ActionsTypes =  AddPostActionType | AddMessageActionType | NewPostTextActionType
+type AddPostActionType = {
+    type:'ADD-POST'
+}
+type AddMessageActionType = {
+    type: 'ADD-MESSAGE'
+    userMessage: string
+}
+type NewPostTextActionType = {
+    type:'UPDATE-NEW-POST-TEXT'
+    newText:string
+}
 export type DialogsType = {
     id: number
     name: string
 }
-
 export type MessagesType = {
     id: number
     message: string
 }
-
 export type PostType = {
     id: number
     message: string
     likesCount: number
 }
-
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
@@ -81,7 +93,6 @@ export type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
-
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType

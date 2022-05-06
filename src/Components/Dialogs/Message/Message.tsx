@@ -1,10 +1,10 @@
 import clases from '../Dialogs.module.css';
 import React from 'react';
-import {MessagesType} from '../../../redux/state';
+import {ActionsTypes, MessagesType} from '../../../redux/state';
 
 type MessagePropsType = {
     messages: Array<MessagesType>
-    dispatch: (action:any) => void
+    dispatch: (action:ActionsTypes) => void
 }
 
 const Message = (props: MessagePropsType) => {
@@ -14,8 +14,7 @@ const Message = (props: MessagePropsType) => {
     const addMessage = () => {
         if (newMessageElement.current) {
             let text = newMessageElement.current.value
-            let action = {type: 'ADD-MESSAGE', userMessage:text}
-            props.dispatch(action)
+            props.dispatch({type: 'ADD-MESSAGE', userMessage:text})
             newMessageElement.current.value = (' ')
         }
     }
@@ -28,7 +27,7 @@ const Message = (props: MessagePropsType) => {
                 </div>
             })}
             <div>
-                <textarea ref={newMessageElement}></textarea>
+                <textarea ref={newMessageElement}>x</textarea>
                 <button onClick={addMessage}> addMessage</button>
             </div>
 

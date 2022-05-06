@@ -2,12 +2,12 @@ import React from 'react';
 import clases from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogsType, MessagesType} from '../../redux/state';
+import {ActionsTypes, DialogsType, MessagesType} from '../../redux/state';
 
 type DialogsProps = {
     dialogs:Array<DialogsType>
     messages:Array<MessagesType>
-    dispatch:(action:any)=>void
+    dispatch:(action:ActionsTypes)=>void
 }
 
 const Dialogs = (props:DialogsProps) => {

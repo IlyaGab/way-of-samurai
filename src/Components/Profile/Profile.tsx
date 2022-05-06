@@ -2,12 +2,12 @@ import React from "react";
 import clases from './Profile.module.css'
 import ProfileInfo from './MyPosts/ProfileInfo/ProfileInfo';
 import MyPosts from './MyPosts/MyPosts';
-import {PostType, ProfilePageType} from '../../redux/state';
+import {ActionsTypes, PostType} from '../../redux/state';
 
 type ProfileProps = {
     postData: Array<PostType>
     newPostText:string
-    dispatch:(action:any)=>void
+    dispatch:(action:ActionsTypes)=>void
 }
 
 
