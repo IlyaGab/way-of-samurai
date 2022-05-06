@@ -7,7 +7,7 @@ import {DialogsType, MessagesType} from '../../redux/state';
 type DialogsProps = {
     dialogs:Array<DialogsType>
     messages:Array<MessagesType>
-    addMessage: (userMessage:string)=>void
+    dispatch:(action:any)=>void
 }
 
 const Dialogs = (props:DialogsProps) => {
@@ -20,7 +20,7 @@ const Dialogs = (props:DialogsProps) => {
             </div>
 
             <div className={clases.messages}>
-                <Message  messages={messages} addMessage={props.addMessage}/>)
+                <Message  messages={messages} dispatch={props.dispatch}/>)
             </div>
         </div>
     )

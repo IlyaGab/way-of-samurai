@@ -21,7 +21,7 @@ export const MyPosts = (props: MyPostsType) => {
     }
 
     let onPostChange = () => {
-        let text = newPostElement.current?.value
+        let text = newPostElement.current && newPostElement.current.value
         let action = {type:'UPDATE-NEW-POST-TEXT', newText: text}
         props.dispatch(action)
     }

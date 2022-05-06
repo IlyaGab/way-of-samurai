@@ -35,11 +35,6 @@ let store = {
         this._callSubscriber = observer
     },
 
-    addMessage(userMessage: string) {
-        let newMessage = {id: 6, message: userMessage}
-        this._state.dialogsPage.messages.push(newMessage)
-        this._callSubscriber(this._state)
-    },
 
     dispatch(action: any ){
         debugger

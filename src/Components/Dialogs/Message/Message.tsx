@@ -4,7 +4,7 @@ import {MessagesType} from '../../../redux/state';
 
 type MessagePropsType = {
     messages: Array<MessagesType>
-    addMessage: (userMessage: string) => void
+    dispatch: (action:any) => void
 }
 
 const Message = (props: MessagePropsType) => {
@@ -14,7 +14,8 @@ const Message = (props: MessagePropsType) => {
     const addMessage = () => {
         if (newMessageElement.current) {
             let text = newMessageElement.current.value
-            props.addMessage(text)
+            let action = {type: 'ADD-MESSAGE', userMessage:text}
+            props.dispatch(action)
             newMessageElement.current.value = (' ')
         }
     }
