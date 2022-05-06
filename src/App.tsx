@@ -28,7 +28,6 @@ function App(props:AppPageProps) {
     let messages = props.appState.dialogsPage.messages
 
     return (
-        <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navigation/>
@@ -38,10 +37,8 @@ function App(props:AppPageProps) {
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
                         <Route path='/settings' component={Settings}/>
-
                 </div>
             </div>
-        </BrowserRouter>
     );
 }
 

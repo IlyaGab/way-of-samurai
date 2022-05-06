@@ -7,7 +7,6 @@ type NewPostType = {
     postData: Array<PostType>
 }
 
-
 const Post = (props: NewPostType) => {
 
     return (
