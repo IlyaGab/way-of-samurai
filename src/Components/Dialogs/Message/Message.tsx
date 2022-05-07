@@ -1,6 +1,8 @@
 import clases from '../Dialogs.module.css';
 import React from 'react';
-import {ActionsTypes, addMessageActionCreator, MessagesType, updateNewMessageActionCreator} from '../../../redux/state';
+import {ActionsTypes, MessagesType} from '../../../redux/state';
+import {addMessageActionCreator, updateNewMessageActionCreator} from '../../../redux/dialogsReducer';
+
 
 type MessagePropsType = {
     messages: Array<MessagesType>
@@ -18,8 +20,8 @@ const Message = (props: MessagePropsType) => {
 
     const onNewMessageChange = () => {
         if (newMessageElement.current) {
-            let text = newMessageElement.current.value
-            let action = updateNewMessageActionCreator(text)
+            let newText = newMessageElement.current.value
+            let action = updateNewMessageActionCreator(newText)
             props.dispatch(action)
         }
     }

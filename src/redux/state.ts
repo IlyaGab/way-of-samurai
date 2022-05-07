@@ -1,7 +1,5 @@
-let ADD_POST = 'ADD-POST'
-let UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-POST-TEXT'
-let ADD_MESSAGE = 'ADD-MESSAGE'
-let UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE'
+import {addPostActionCreator, profileReducer, updateNewPostActionCreator} from './profileReducer';
+import {addMessageActionCreator, dialogsReducer, updateNewMessageActionCreator} from './dialogsReducer';
 
 let store: StoreTypes = {
     _state: {
@@ -42,24 +40,13 @@ let store: StoreTypes = {
         this._callSubscriber = observer
     },
 
-    dispatch(action: any) {
-        if (action.type === ADD_POST) {
-            let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0};
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber()
-        } else if (action.type === UPDATE_NEW_TEXT_POST) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber()
-        } else if (action.type === ADD_MESSAGE) {
-            let newMessage = {id: 6, message: this._state.dialogsPage.newMessageBody}
-            this._state.dialogsPage.messages.push(newMessage)
-            this._state.dialogsPage.newMessageBody = ''
-            this._callSubscriber()
-        } else if (action.type === UPDATE_NEW_MESSAGE){
-            this._state.dialogsPage.newMessageBody = action.userMessage
-            this._callSubscriber()
-        }
+    dispatch(action: ActionsTypes) {
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+
+        this._callSubscriber()
+
     }
 }
 
@@ -75,6 +62,7 @@ export type ActionsTypes =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof addMessageActionCreator>
     | ReturnType<typeof updateNewPostActionCreator>
+    | ReturnType<typeof updateNewMessageActionCreator>
 
 export type DialogsType = {
     id: number
@@ -103,27 +91,8 @@ export type RootStateType = {
     dialogsPage: DialogPageType
 }
 
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    } as const
-}
-export const updateNewPostActionCreator = (text: string) => {
-    return {
-        type: UPDATE_NEW_TEXT_POST, newText: text
-    } as const
-}
-export const addMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE
-    } as const
-}
 
-export const updateNewMessageActionCreator = (userMessage:string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE, userMessage: userMessage
-    } as const
-}
+
 
 export default store
 
