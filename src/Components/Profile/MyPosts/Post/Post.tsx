@@ -1,6 +1,6 @@
 import clases from './Post.module.css';
 import React from 'react';
-import {PostType} from '../../../../redux/state';
+import {PostType} from '../../../../redux/store';
 
 
 type NewPostType = {

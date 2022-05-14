@@ -1,4 +1,4 @@
-import {addPostActionCreator, profileReducer, updateNewPostActionCreator} from './profileReducer';
+import profileReducer, {addPostActionCreator, updateNewPostActionCreator} from './profileReducer';
 import {addMessageActionCreator, dialogsReducer, updateNewMessageActionCreator} from './dialogsReducer';
 
 let store: StoreTypes = {

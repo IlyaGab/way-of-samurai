@@ -1,6 +1,6 @@
 import clases from '../Dialogs.module.css';
 import React from 'react';
-import {ActionsTypes, MessagesType} from '../../../redux/state';
+import {ActionsTypes, MessagesType} from '../../../redux/store';
 import {addMessageActionCreator, updateNewMessageActionCreator} from '../../../redux/dialogsReducer';
 
 
@@ -9,6 +9,7 @@ type MessagePropsType = {
     newMessageBody:string
     dispatch: (action: ActionsTypes) => void
 }
+
 
 const Message = (props: MessagePropsType) => {
 
