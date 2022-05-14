@@ -7,24 +7,25 @@ import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import { StoreTypes} from './redux/store';
+import {DialogPageType, ProfilePageType} from './redux/store';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
+import {EmptyObject, Store} from 'redux';
 
 
 
-type AppPageProps = {
-    store:StoreTypes
-}
+// type AppPageProps = {
+//     store:Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType; }>
+// }
 
-function App(props:AppPageProps) {
+function App() {
 
     return (
             <div className="app-wrapper">
                 <Header/>
                 <Navigation/>
                 <div className="app-wrapper-content">
-                        <Route path='/dialogs' render={()=>(<DialogsContainer store={props.store}  /> )} />
-                        <Route path='/profile'  render={()=>(<Profile store={props.store}   />)}  />
+                        <Route path='/dialogs' render={()=>(<DialogsContainer   /> )} />
+                        <Route path='/profile'  render={()=>(<Profile   />)}  />
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
                         <Route path='/settings' component={Settings}/>

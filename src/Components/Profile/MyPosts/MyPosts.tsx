@@ -1,13 +1,14 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostType} from '../../../redux/store';
+import {DialogPageType, ProfilePageType} from '../../../redux/store';
+import {EmptyObject} from 'redux';
 
 
 type MyPostsType = {
     updateNewPostText: (newPostText: string) => void
     addPost: () => void
-    postData: Array<PostType>
+    postData: EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType; }
     newPostText: string
 
 }
@@ -15,7 +16,7 @@ type MyPostsType = {
 
 const MyPosts = (props: MyPostsType) => {
     let postData =
-        props.postData.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+        props.postData.profilePage.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 

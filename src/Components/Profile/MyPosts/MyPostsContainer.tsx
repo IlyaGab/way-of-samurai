@@ -1,27 +1,35 @@
 import React from 'react';
-import { StoreTypes} from '../../../redux/store';
+import {DialogPageType, ProfilePageType} from '../../../redux/store';
 import {addPostActionCreator, updateNewPostActionCreator} from '../../../redux/profileReducer';
 import MyPosts from './MyPosts';
+import {EmptyObject, Store} from 'redux';
+import StoreContext from '../../../StoreContext';
 
 
+// type MyPostsType = {
+//     store:Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType;}>
+// }
 
-type MyPostsType = {
-    store:StoreTypes
-}
 
+const MyPostsContainer = () => {
 
-const MyPostsContainer = (props: MyPostsType) => {
+    return (
+        <StoreContext.Consumer>
+            {
+            store => {
+                const addPost = () => {
+                    store.dispatch(addPostActionCreator())
+                }
 
-    const addPost = () => {
-        props.store.dispatch(addPostActionCreator())
-    }
-
-    let onPostChange = (text:string) => {
-            let action = updateNewPostActionCreator(text)
-            props.store.dispatch(action)
+                let onPostChange = (text: string) => {
+                    let action = updateNewPostActionCreator(text)
+                    store.dispatch(action)
+                }
+                return <MyPosts updateNewPostText={onPostChange} addPost={addPost}
+                                newPostText={store.getState().profilePage.newPostText} postData={store.getState()}/>
+            }
         }
-
-    return (<MyPosts updateNewPostText={onPostChange} addPost={addPost} newPostText={props.store._state.profilePage.newPostText} postData={props.store._state.profilePage.posts} />)
+        </StoreContext.Consumer>)
 }
 
 

@@ -1,5 +1,6 @@
 import {DialogPageType} from './store';
 
+
 let ADD_MESSAGE = 'ADD-MESSAGE'
 let UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE'
 
@@ -20,7 +21,7 @@ let initialState = {
 }
 
 
-export const dialogsReducer = (state: DialogPageType = initialState, action: any) => {
+export const dialogsReducer = (state: DialogPageType = initialState, action: any):DialogPageType => {
 
     if (action.type === ADD_MESSAGE) {
         let newMessage = {id: 6, message: state.newMessageBody}
