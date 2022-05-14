@@ -1,33 +1,32 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import {ActionsTypes, PostType} from '../../../redux/store';
-import {addPostActionCreator, updateNewPostActionCreator} from '../../../redux/profileReducer';
-
+import {PostType} from '../../../redux/store';
 
 
 type MyPostsType = {
+    updateNewPostText: (newPostText: string) => void
+    addPost: () => void
     postData: Array<PostType>
-    newPostText:string
-    dispatch:(action:ActionsTypes)=>void
+    newPostText: string
+
 }
 
 
-
-export const MyPosts = (props: MyPostsType) => {
-    let postData = props.postData
+const MyPosts = (props: MyPostsType) => {
+    let postData =
+        props.postData.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-            props.dispatch(addPostActionCreator())
+        props.addPost()
     }
 
     let onPostChange = () => {
-        if(newPostElement.current){
-            let text =  newPostElement.current.value
-            let action = updateNewPostActionCreator(text)
-            props.dispatch(action)
+        if (newPostElement.current) {
+            let text = newPostElement.current.value
+            props.updateNewPostText(text)
         }
 
     }
@@ -49,7 +48,7 @@ export const MyPosts = (props: MyPostsType) => {
                 </div>
             </div>
             <div className={clases.posts}>
-                        <Post postData={postData} />
+                {postData}
             </div>
         </div>
     )
