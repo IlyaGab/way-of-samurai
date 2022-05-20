@@ -31,8 +31,8 @@ let mapDispatchToProps = (dispatch:Dispatch<ProfileReducerActionsType>) => {
             dispatch(addPostActionCreator())
         }
     }
-
 }
+
 export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 
