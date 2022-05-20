@@ -7,15 +7,7 @@ import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {DialogPageType, ProfilePageType} from './redux/store';
-import DialogsContainer from './Components/Dialogs/DialogsContainer';
-import {EmptyObject, Store} from 'redux';
-
-
-
-// type AppPageProps = {
-//     store:Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType; }>
-// }
+import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 
 function App() {
 

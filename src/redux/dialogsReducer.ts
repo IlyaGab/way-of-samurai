@@ -1,5 +1,20 @@
-import {DialogPageType} from './store';
+export type DialogReducerActionTypes =
+    ReturnType<typeof addMessageActionCreator>
+    | ReturnType<typeof updateNewMessageActionCreator>
 
+export type MessagesType = {
+    id: number
+    message: string
+}
+export type DialogPageType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMessageBody: string
+}
+export type DialogsType = {
+    id: number
+    name: string
+}
 
 let ADD_MESSAGE = 'ADD-MESSAGE'
 let UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE'
@@ -17,20 +32,24 @@ let initialState = {
         {id: 2, message: 'How is your IT-KAMASUTRA?'},
         {id: 3, message: 'Yo'}
     ],
-    newMessageBody: ' '
+    newMessageBody: ''
 }
 
 
-export const dialogsReducer = (state: DialogPageType = initialState, action: any):DialogPageType => {
-
-    if (action.type === ADD_MESSAGE) {
-        let newMessage = {id: 6, message: state.newMessageBody}
-        state.messages.push(newMessage)
-        state.newMessageBody = ''
-    } else if (action.type === UPDATE_NEW_MESSAGE) {
-        state.newMessageBody = action.userMessage
+export const dialogsReducer = (state: DialogPageType = initialState, action: any): DialogPageType => {
+    let stateCopy = {...state, messages: [...state.messages]}
+    switch (action.type) {
+        case ADD_MESSAGE:
+            let newMessage = {id: 6, message: stateCopy.newMessageBody}
+            stateCopy.messages.push(newMessage)
+            stateCopy.newMessageBody= ''
+            return stateCopy
+        case UPDATE_NEW_MESSAGE:
+            stateCopy.newMessageBody = action.userMessage
+            return stateCopy
+        default:
+            return state
     }
-    return state
 }
 
 export const addMessageActionCreator = () => {

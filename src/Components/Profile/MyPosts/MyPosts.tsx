@@ -1,22 +1,19 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import {DialogPageType, ProfilePageType} from '../../../redux/store';
-import {EmptyObject} from 'redux';
+import {ProfilePageType} from '../../../redux/profileReducer';
 
 
 type MyPostsType = {
     updateNewPostText: (newPostText: string) => void
     addPost: () => void
-    postData: EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType; }
-    newPostText: string
+    profilePage: ProfilePageType
 
 }
 
-
 const MyPosts = (props: MyPostsType) => {
     let postData =
-        props.postData.profilePage.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+        props.profilePage.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
@@ -39,7 +36,7 @@ const MyPosts = (props: MyPostsType) => {
             </div>
             <div>
                 <div>
-                    <textarea ref={newPostElement} value={props.newPostText} onChange={onPostChange}/>
+                    <textarea ref={newPostElement} value={props.profilePage.newPostText} onChange={onPostChange}/>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>

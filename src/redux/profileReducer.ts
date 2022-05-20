@@ -1,5 +1,16 @@
-import { ProfilePageType} from './store';
+export type ProfileReducerActionsType =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostActionCreator>
 
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+export type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
+}
 let ADD_POST = 'ADD-POST'
 let UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-POST-TEXT'
 
@@ -14,16 +25,20 @@ let initialState = {
     newPostText: 'it-kamasutra'
 }
 
-const profileReducer = (state:ProfilePageType = initialState, action:any):ProfilePageType => {
-
-    if (action.type === ADD_POST) {
-        let newPost = {id: 5, message: state.newPostText, likesCount: 0};
-        state.posts.push(newPost)
-        state.newPostText = '';
-    } else if (action.type === UPDATE_NEW_TEXT_POST) {
-        state.newPostText = action.newText
+const profileReducer = (state: ProfilePageType = initialState, action: any): ProfilePageType => {
+    let stateCopy = {...state, posts: [...state.posts]}
+    switch (action.type) {
+        case ADD_POST:
+            let newPost = {id: 5, message: state.newPostText, likesCount: 0};
+            stateCopy.posts.push(newPost)
+            stateCopy.newPostText = '';
+            return stateCopy
+        case UPDATE_NEW_TEXT_POST:
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        default:
+            return state
     }
-    return state
 }
 
 export const updateNewPostActionCreator = (newText: string) => {
@@ -38,9 +53,6 @@ export const addPostActionCreator = () => {
         type: ADD_POST
     } as const
 }
-
-
-
 
 
 export default profileReducer

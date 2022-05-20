@@ -1,36 +1,32 @@
-import React from 'react';
-
 import Dialogs from './Dialogs';
-import {addMessageActionCreator, updateNewMessageActionCreator} from '../../redux/dialogsReducer';
-import {EmptyObject, Store} from 'redux';
-import {DialogPageType, ProfilePageType} from '../../redux/store';
-import StoreContext from '../../StoreContext';
+import {
+    addMessageActionCreator,
+    DialogPageType,
+    DialogReducerActionTypes,
+    updateNewMessageActionCreator
+} from '../../redux/dialogsReducer';
+import {connect} from 'react-redux';
+import {AppStateType} from '../../redux/redux-store';
+import {Dispatch} from 'redux';
 
-// type DialogsContainerPropsType = {
-//     store:Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogPageType; }>
-// }
 
-const DialogsContainer = () => {
+export type DialogsContainerPropsType = {
+    dialogsPage: DialogPageType
+}
 
 
-    return (
-        <StoreContext.Consumer>
-            {
-                store => {
-                    let onSendMessageClick = () => {
-                        store.dispatch(addMessageActionCreator())
-                    }
+let mapStateToProps = (state:AppStateType):DialogsContainerPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
 
-                    let onNewMessageChange = (body: string) => {
-                        store.dispatch(updateNewMessageActionCreator(body))
-                    }
+let mapDispatchToProps = (dispatch:Dispatch<DialogReducerActionTypes>) => {
+    return {
+        sendMessage:()=>{dispatch(addMessageActionCreator())},
+        updateNewMessageBody: (body:string)=>{dispatch(updateNewMessageActionCreator(body))}
+    }
+}
 
-                    return <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick}
-                                    dialogsPage={store.getState().dialogsPage}/>
-                }
-            }
-        </StoreContext.Consumer>
-    );
-};
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
-export default DialogsContainer;
