@@ -1,5 +1,3 @@
-
-
 export type UsersLocationType = {
     city: string
     country: string
@@ -15,18 +13,20 @@ export type UsersType = {
 export type ArrayUsersType = {
     users: Array<UsersType>
 }
-export type ActionsTypesOfUsersPage = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+export type ActionsTypesOfUsersPage = ReturnType<typeof followAC>
+    & ReturnType<typeof unfollowAC>
+    & ReturnType<typeof setUsersAC>
 
 let FOLLOW = 'FOLLOW'
 let UNFOLLOW = 'UNFOLLOW'
 let SET_USERS = 'SET_USERS '
 
 
-let initialState = {
+let initialState:ArrayUsersType = {
     users: [],
 }
 
-export const usersReducer = (state:ArrayUsersType = initialState, action: any): ArrayUsersType => {
+export const usersReducer = (state= initialState, action:ActionsTypesOfUsersPage): ArrayUsersType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -49,7 +49,7 @@ export const usersReducer = (state:ArrayUsersType = initialState, action: any): 
                 })
             }
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users]}
         default:
             return state
     }

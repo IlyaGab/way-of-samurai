@@ -1,15 +1,10 @@
 import React from 'react';
 import clases from './MyPosts.module.css'
 import Post from './Post/Post';
-import {ProfilePageType} from '../../../redux/profileReducer';
+import {MyPostsType} from './MyPostsContainer';
 
 
-type MyPostsType = {
-    updateNewPostText: (newPostText: string) => void
-    addPost: () => void
-    profilePage: ProfilePageType
 
-}
 
 const MyPosts = (props: MyPostsType) => {
     let postData =

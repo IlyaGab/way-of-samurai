@@ -1,6 +1,5 @@
-export type DialogReducerActionTypes =
-    ReturnType<typeof addMessageActionCreator>
-    | ReturnType<typeof updateNewMessageActionCreator>
+export type DialogReducerActionTypes = ReturnType<typeof addMessageActionCreator>&
+ReturnType<typeof updateNewMessageActionCreator>
 
 export type MessagesType = {
     id: number
@@ -19,7 +18,7 @@ export type DialogsType = {
 let ADD_MESSAGE = 'ADD-MESSAGE'
 let UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE'
 
-let initialState = {
+let initialState: DialogPageType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrey'},
@@ -36,12 +35,14 @@ let initialState = {
 }
 
 
-export const dialogsReducer = (state: DialogPageType = initialState, action: any): DialogPageType => {
+export const dialogsReducer = (state = initialState, action:DialogReducerActionTypes ): DialogPageType => {
     switch (action.type) {
         case ADD_MESSAGE:
-            return  {...state,
-                newMessageBody : '',
-                messages: [...state.messages, {id: 6, message: state.newMessageBody}]}
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 6, message: state.newMessageBody}]
+            }
         case UPDATE_NEW_MESSAGE:
             return {...state, newMessageBody: action.userMessage}
         default:
@@ -58,6 +59,6 @@ export const addMessageActionCreator = () => {
 export const updateNewMessageActionCreator = (userMessage: string) => {
     return {
         type: UPDATE_NEW_MESSAGE,
-        userMessage: userMessage
+        userMessage
     } as const
 }

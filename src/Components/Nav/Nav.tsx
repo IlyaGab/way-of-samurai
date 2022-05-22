@@ -2,9 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import clases from './Nav.module.css'
 
-type NavbarPropsType = {
-
-}
 
 const Navigation = () => {
     return (
@@ -14,6 +11,9 @@ const Navigation = () => {
             </div>
             <div className={clases.item}>
                 <NavLink to='/dialogs' activeClassName={clases.active}>Messages</NavLink>
+            </div>
+            <div className={clases.item}>
+                <NavLink to='/users' activeClassName={clases.active}>Users</NavLink>
             </div>
             <div className={clases.item}>
                 <NavLink to='/news' activeClassName={clases.active}>News</NavLink>

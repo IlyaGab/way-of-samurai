@@ -1,6 +1,6 @@
 export type ProfileReducerActionsType =
     ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostActionCreator>
+    & ReturnType<typeof updateNewPostActionCreator>
 
 export type PostType = {
     id: number
@@ -15,7 +15,7 @@ let ADD_POST = 'ADD-POST'
 let UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-POST-TEXT'
 
 
-let initialState = {
+let initialState:ProfilePageType = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'Its my first post', likesCount: 11},
@@ -25,7 +25,7 @@ let initialState = {
     newPostText: 'it-kamasutra'
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: any): ProfilePageType => {
+export const profileReducer = (state = initialState, action: ProfileReducerActionsType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
           return  {...state,
@@ -51,5 +51,3 @@ export const addPostActionCreator = () => {
     } as const
 }
 
-
-export default profileReducer
