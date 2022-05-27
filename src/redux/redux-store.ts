@@ -5,8 +5,6 @@ import {dialogsReducer} from './dialogsReducer';
 import {usersReducer} from './usersReducer';
 
 
-
-
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
