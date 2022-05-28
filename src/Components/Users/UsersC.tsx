@@ -4,20 +4,20 @@ import s from './Users.module.css'
 import {UsersPageType} from './UsersContainer';
 import userPhoto from '../../assets/images/user.jpg'
 
-
-const Users = (props: UsersPageType) => {
-        let getUsers = () => {
-            if (props.usersPage.users.length === 0) {
-                axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                    props.setUsersAC(response.data.items)
-                })
-            }
+class UsersC extends React.Component<UsersPageType>{
+       constructor(props:UsersPageType){
+           super(props);
+           alert('NEW')
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+                this.props.setUsersAC(response.data.items)
+            })
         }
+
+    render(){
         return (
             <div>
-                <button onClick={getUsers}>Get users</button>
                 {
-                    props.usersPage.users.map(u =>
+                    this.props.usersPage.users.map(u =>
                             <div key={u.id}>
                     <span>
                         <div>
@@ -26,10 +26,10 @@ const Users = (props: UsersPageType) => {
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
+                                    this.props.unfollow(u.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    this.props.follow(u.id)
                                 }}>Follow</button>
                             }
                         </div>
@@ -51,6 +51,7 @@ const Users = (props: UsersPageType) => {
         );
 
     }
-;
+}
 
-export default Users;
+
+export default UsersC;

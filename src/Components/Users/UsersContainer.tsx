@@ -9,6 +9,7 @@ import {
 } from '../../redux/usersReducer';
 import {Dispatch} from 'redux';
 import {AppStateType} from '../../redux/redux-store';
+import UsersC from './UsersC';
 
 type MapStateUsersPropsType = {
     usersPage: ArrayUsersType
@@ -38,4 +39,4 @@ let mapDispatchToProps= (dispatch: Dispatch):MapDispatchUsersPropsType => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersC);
