@@ -4,16 +4,14 @@ import s from './Users.module.css'
 import {UsersPageType} from './UsersContainer';
 import userPhoto from '../../assets/images/user.jpg'
 
-class UsersC extends React.Component<UsersPageType>{
-       constructor(props:UsersPageType){
-           super(props);
-           alert('NEW')
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                this.props.setUsersAC(response.data.items)
-            })
-        }
+class UsersC extends React.Component<UsersPageType> {
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            this.props.setUsersAC(response.data.items)
+        });
+    }
 
-    render(){
+    render() {
         return (
             <div>
                 {
@@ -44,12 +42,9 @@ class UsersC extends React.Component<UsersPageType>{
                     </span>
                             </div>
                     )
-
                 }
             </div>
-
         );
-
     }
 }
 
