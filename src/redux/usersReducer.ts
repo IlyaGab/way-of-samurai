@@ -11,22 +11,32 @@ export type UsersType = {
     location: UsersLocationType
 }
 export type ArrayUsersType = {
-    users: Array<UsersType>
+    users: Array<UsersType>,
+    pageSize: number,
+    totalUsersCount:number,
+    currentPage:number
 }
 export type ActionsTypesOfUsersPage = ReturnType<typeof followAC>
     & ReturnType<typeof unfollowAC>
     & ReturnType<typeof setUsersAC>
+    & ReturnType<typeof setPageAC>
+    & ReturnType<typeof setTotalCountAC>
 
 let FOLLOW = 'FOLLOW'
 let UNFOLLOW = 'UNFOLLOW'
-let SET_USERS = 'SET_USERS '
+let SET_USERS = 'SET_USERS'
+let SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+let SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 
 
 let initialState:ArrayUsersType = {
     users: [],
+    pageSize:5,
+    totalUsersCount: 20,
+    currentPage:3
 }
 
-export const usersReducer = (state= initialState, action:ActionsTypesOfUsersPage): ArrayUsersType => {
+export const usersReducer = (state:ArrayUsersType = initialState, action:ActionsTypesOfUsersPage): ArrayUsersType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -50,6 +60,10 @@ export const usersReducer = (state= initialState, action:ActionsTypesOfUsersPage
             }
         case SET_USERS:
             return {...state, users: [...action.users]}
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_COUNT:
+            return {...state, totalUsersCount: action.count}
         default:
             return state
     }
@@ -74,4 +88,18 @@ export const setUsersAC = (users:Array<UsersType>) => {
         users: users
     } as const
 
+}
+
+export const setPageAC = (currentPage: number)=> {
+    return {
+        type:SET_CURRENT_PAGE,
+        currentPage
+    } as const
+}
+
+export const setTotalCountAC = (totalUsersCount:number) => {
+    return {
+        type: SET_TOTAL_COUNT,
+       count: totalUsersCount
+    } as const
 }

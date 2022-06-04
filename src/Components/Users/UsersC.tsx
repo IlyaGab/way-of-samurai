@@ -6,20 +6,49 @@ import userPhoto from '../../assets/images/user.jpg'
 
 class UsersC extends React.Component<UsersPageType> {
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            this.props.setUsersAC(response.data.items)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&totalCount=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setTotalCount(response.data.totalCount)
         });
     }
 
     render() {
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
+        const onPageChanged = (pageNumber: number) => {
+                this.props.setPage(pageNumber)
+                axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&totalCount=${this.props.pageSize}`)
+                    .then(response => {
+                        this.props.setUsers(response.data.items)
+
+                    });
+            }
+        ;
+
         return (
-            <div>
+            <div className={s.main}>
+                <div>
+                    {pages.map(p => {
+                        return <span
+                            //@ts-ignore
+                            className={this.props.currentPage === p && s.selectedPage} onClick={(e) => {
+                            onPageChanged(p)
+                        }}>{p}</span>
+                    })}
+                </div>
                 {
-                    this.props.usersPage.users.map(u =>
+                    this.props.users.map(u =>
                             <div key={u.id}>
                     <span>
                         <div>
-                            <img alt="not defined" className={s.image} src={userPhoto}/>
+                            <img alt="not defined" className={s.image} src={
+                                //@ts-ignore
+                                u.photos.small != null ? u.photos.small : userPhoto}/>
                         </div>
                         <div>
                             {u.followed
@@ -43,6 +72,7 @@ class UsersC extends React.Component<UsersPageType> {
                             </div>
                     )
                 }
+
             </div>
         );
     }
