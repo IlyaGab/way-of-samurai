@@ -10,6 +10,7 @@ export type UsersFunctionalComponentType = {
     pageSize: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
+    setIsFetching:(isFetching:boolean)=>void
     follow: (userID: number) => void
     unfollow: (userID: number) => void
 }
@@ -32,7 +33,7 @@ const UsersFunctionalComponent = (props: UsersFunctionalComponentType) => {
                     (e) => {
                         props.onPageChanged(p)
                     }}>
-                    {p}
+                    {p + " "}
                 </span>
             })}
         </div>

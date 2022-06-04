@@ -5,38 +5,42 @@ export type UsersLocationType = {
 export type UsersType = {
     id: number
     followed: boolean
-    photoURL:string
+    photoURL: string
     name: string
     status: string
     location: UsersLocationType
 }
 export type ArrayUsersType = {
-    users: Array<UsersType>,
-    pageSize: number,
-    totalUsersCount:number,
-    currentPage:number
+    users: Array<UsersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
 }
 export type ActionsTypesOfUsersPage = ReturnType<typeof followAC>
     & ReturnType<typeof unfollowAC>
     & ReturnType<typeof setUsersAC>
     & ReturnType<typeof setPageAC>
     & ReturnType<typeof setTotalCountAC>
+    & ReturnType<typeof setFetchingAC>
 
 let FOLLOW = 'FOLLOW'
 let UNFOLLOW = 'UNFOLLOW'
 let SET_USERS = 'SET_USERS'
 let SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 let SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
+let TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 
-let initialState:ArrayUsersType = {
+let initialState: ArrayUsersType = {
     users: [],
-    pageSize:5,
+    pageSize: 5,
     totalUsersCount: 20,
-    currentPage:3
+    currentPage: 3,
+    isFetching: false
 }
 
-export const usersReducer = (state:ArrayUsersType = initialState, action:ActionsTypesOfUsersPage): ArrayUsersType => {
+export const usersReducer = (state: ArrayUsersType = initialState, action: ActionsTypesOfUsersPage): ArrayUsersType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -64,6 +68,8 @@ export const usersReducer = (state:ArrayUsersType = initialState, action:Actions
             return {...state, currentPage: action.currentPage}
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.count}
+        case TOGGLE_IS_FETCHING:
+            return {...state, isFetching:action.isFetching}
         default:
             return state
     }
@@ -75,31 +81,34 @@ export const followAC = (userID: number) => {
         userID: userID
     } as const
 }
-
 export const unfollowAC = (userID: number) => {
     return {
         type: UNFOLLOW,
         userID: userID
     } as const
 }
-export const setUsersAC = (users:Array<UsersType>) => {
+export const setUsersAC = (users: Array<UsersType>) => {
     return {
         type: SET_USERS,
         users: users
     } as const
 
 }
-
-export const setPageAC = (currentPage: number)=> {
+export const setPageAC = (currentPage: number) => {
     return {
-        type:SET_CURRENT_PAGE,
+        type: SET_CURRENT_PAGE,
         currentPage
     } as const
 }
-
-export const setTotalCountAC = (totalUsersCount:number) => {
+export const setTotalCountAC = (totalUsersCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
-       count: totalUsersCount
+        count: totalUsersCount
+    } as const
+}
+export const setFetchingAC = (isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FETCHING,
+        isFetching
     } as const
 }
