@@ -10,7 +10,6 @@ export type UsersFunctionalComponentType = {
     pageSize: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    setIsFetching:(isFetching:boolean)=>void
     follow: (userID: number) => void
     unfollow: (userID: number) => void
 }
@@ -29,7 +28,7 @@ const UsersFunctionalComponent = (props: UsersFunctionalComponentType) => {
             {pages.map(p => {
                 return <span
                     //@ts-ignore
-                    className={props.currentPage === p && s.selectedPage} onClick={
+                    className={props.currentPage === p ? s.selectedPage : null} onClick={
                     (e) => {
                         props.onPageChanged(p)
                     }}>

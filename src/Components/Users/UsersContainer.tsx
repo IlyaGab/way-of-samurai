@@ -1,12 +1,9 @@
 import {connect} from 'react-redux';
 import {
-    ArrayUsersType,
-    followAC, setFetchingAC, setPageAC, setTotalCountAC,
-    setUsersAC,
-    unfollowAC,
+    ArrayUsersType, follow,
+    setFetching, setPage, setTotalCount, setUsers, unfollow,
     UsersType
 } from '../../redux/usersReducer';
-import {Dispatch} from 'redux';
 import {AppStateType} from '../../redux/redux-store';
 import React from 'react';
 import axios from 'axios';
@@ -27,16 +24,16 @@ type MapDispatchUsersPropsType = {
     setUsers: (users: Array<UsersType>) => void
     setPage: (currentPage: number) => void
     setTotalCount: (totalUsersCount: number) => void
-    setIsFetcing: (isFetching: boolean) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 
 export type UsersPageType = MapStateUsersPropsType & MapDispatchUsersPropsType
 
 class UsersContainer extends React.Component<UsersPageType> {
     componentDidMount() {
-        this.props.setIsFetcing(true)
+        this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&totalCount=${this.props.pageSize}`).then(response => {
-            this.props.setIsFetcing(false)
+            this.props.setIsFetching(false)
             this.props.setUsers(response.data.items)
             this.props.setTotalCount(response.data.totalCount = 200)
         });
@@ -44,10 +41,10 @@ class UsersContainer extends React.Component<UsersPageType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.setPage(pageNumber)
-        this.props.setIsFetcing(true)
+        this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&totalCount=${this.props.pageSize}`)
             .then(response => {
-                this.props.setIsFetcing(false)
+                this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
             });
     };
@@ -61,7 +58,6 @@ class UsersContainer extends React.Component<UsersPageType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
-                setIsFetching={this.props.setIsFetcing}
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
             />
@@ -79,15 +75,13 @@ let mapStateToProps = (state: AppStateType): ArrayUsersType => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchUsersPropsType => {
-    return {
-        follow: (userID: number) => dispatch(followAC(userID)),
-        unfollow: (userID: number) => dispatch(unfollowAC(userID)),
-        setUsers: (users: Array<UsersType>) => dispatch(setUsersAC(users)),
-        setPage: (currentPage: number) => dispatch(setPageAC(currentPage)),
-        setTotalCount: (totalUsersCount: number) => dispatch(setTotalCountAC(totalUsersCount)),
-        setIsFetcing: (isFetching: boolean) => dispatch(setFetchingAC(isFetching))
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+        follow: follow,
+        unfollow: unfollow,
+        setUsers: setUsers,
+        setPage: setPage,
+        setTotalCount: setTotalCount,
+        setIsFetching: setFetching
+    }
+)(UsersContainer);
