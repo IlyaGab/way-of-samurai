@@ -3,6 +3,7 @@ import s from './Users.module.css'
 import userPhoto from '../../assets/images/user.jpg'
 
 import {UsersType} from '../../redux/usersReducer';
+import { NavLink } from 'react-router-dom';
 
 export type UsersFunctionalComponentType = {
     users: Array<UsersType>
@@ -41,9 +42,11 @@ const UsersFunctionalComponent = (props: UsersFunctionalComponentType) => {
                 <div key={u.id}>
                     <span>
                         <div>
+                            <NavLink to={'/profile/' + u.id}>
                             <img alt="not defined" className={s.image} src={
                                 //@ts-ignore
                                 u.photos.small != null ? u.photos.small : userPhoto}/>
+                            </NavLink>
                         </div>
                         <div>
                             {u.followed

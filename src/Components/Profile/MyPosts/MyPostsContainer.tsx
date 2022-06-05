@@ -9,6 +9,7 @@ import {AppStateType} from '../../../redux/redux-store';
 import {Dispatch} from 'redux';
 
 
+
 type MapStateMyPoststContainerPropsType = {
     profilePage: ProfilePageType
 }
@@ -34,7 +35,7 @@ let mapDispatchToProps = (dispatch:Dispatch):MapDispatchMyPoststContainerPropsTy
         },
         addPost: () => {
             dispatch(addPostActionCreator())
-        }
+        },
     }
 }
 
