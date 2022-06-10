@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {
     ArrayUsersType, follow,
-    setFetching, setPage, setTotalCount, setUsers, unfollow,
+    setFetching, setPage, setToggleFollowingProgress, setTotalCount, setUsers, unfollow,
     UsersType
 } from '../../redux/usersReducer';
 import {AppStateType} from '../../redux/redux-store';
@@ -16,6 +16,8 @@ type MapStateUsersPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
+
 }
 
 type MapDispatchUsersPropsType = {
@@ -25,6 +27,7 @@ type MapDispatchUsersPropsType = {
     setPage: (currentPage: number) => void
     setTotalCount: (totalUsersCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    setfollowingInProgress:(isFetching:boolean, userID:number) => void
 }
 
 export type UsersPageType = MapStateUsersPropsType & MapDispatchUsersPropsType
@@ -60,6 +63,8 @@ class UsersContainer extends React.Component<UsersPageType> {
                 onPageChanged={this.onPageChanged}
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
+                setToggleFollowingProgress={this.props.setfollowingInProgress}
+                followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -71,7 +76,8 @@ let mapStateToProps = (state: AppStateType): ArrayUsersType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress:state.usersPage.followingInProgress
     }
 }
 
@@ -82,6 +88,7 @@ export default connect(mapStateToProps, {
         setUsers: setUsers,
         setPage: setPage,
         setTotalCount: setTotalCount,
-        setIsFetching: setFetching
+        setIsFetching: setFetching,
+        setfollowingInProgress: setToggleFollowingProgress
     }
 )(UsersContainer);
