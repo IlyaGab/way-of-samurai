@@ -32,7 +32,7 @@ export type UsersPageType = MapStateUsersPropsType & MapDispatchUsersPropsType
 class UsersContainer extends React.Component<UsersPageType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&totalCount=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&totalCount=${this.props.pageSize}`,{withCredentials:true}).then(response => {
             this.props.setIsFetching(false)
             this.props.setUsers(response.data.items)
             this.props.setTotalCount(response.data.totalCount = 200)
@@ -42,7 +42,7 @@ class UsersContainer extends React.Component<UsersPageType> {
     onPageChanged = (pageNumber: number) => {
         this.props.setPage(pageNumber)
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&totalCount=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&totalCount=${this.props.pageSize}`, {withCredentials:true})
             .then(response => {
                 this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
