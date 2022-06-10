@@ -9,7 +9,7 @@ type HeaderContainerType = MapStateToPropsType & MapDispatchTOPropsType
 
 
 type PropsType= {
-    id:number ,
+    userId:number ,
     email:string ,
     login:string ,
 }
@@ -29,7 +29,8 @@ class HeaderContainter extends React.Component<any> {
             withCredentials:true
         }).then(response => {
           if( response.data.resultCode === 0) {
-              this.props.setAuthUserData(response.data.data.id,response.data.data.email, response.data.data.login)
+              let{id, email, login} = response.data.data
+              this.props.setAuthUserData(id,email,login)
           }
             }
         )

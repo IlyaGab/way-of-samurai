@@ -11,7 +11,6 @@ import ProfileContainer from './Components/Profile/ProfileContainer';
 import HeaderContainter from './Components/Header/HeaderContainter';
 
 
-
 function App() {
 
     return (
