@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {
     ArrayUsersType, follow, getUsersThunkCreator,
-    setFetching, setPage, setToggleFollowingProgress, setTotalCount, setUsers, unfollow,
+    unfollow,
     UsersType
 } from '../../redux/usersReducer';
 import {AppStateType} from '../../redux/redux-store';
@@ -22,12 +22,7 @@ type MapStateUsersPropsType = {
 type MapDispatchUsersPropsType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void
-    setUsers: (users: Array<UsersType>) => void
-    setPage: (currentPage: number) => void
-    setTotalCount: (totalUsersCount: number) => void
-    setIsFetching: (isFetching: boolean) => void
-    setfollowingInProgress: (isFetching: boolean, userID: number) => void
-    getUsersThunkCreator:any
+    getUsersThunkCreator:(currentPage: number,pageSize: number) => void
 }
 
 export type UsersPageType = MapStateUsersPropsType & MapDispatchUsersPropsType
@@ -73,11 +68,6 @@ let mapStateToProps = (state: AppStateType): ArrayUsersType => {
 export default connect(mapStateToProps, {
         follow,
         unfollow,
-        setUsers,
-        setPage,
-        setTotalCount,
-        setFetching,
-        setToggleFollowingProgress,
         getUsersThunkCreator
     }
 )(UsersContainer);

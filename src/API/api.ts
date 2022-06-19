@@ -29,12 +29,7 @@ export const usersAPI =  {
             })
     },
 
-    setAuthUserDataDAL  () {
-        return instance.get(  `auth/me`)
-            .then(response => {
-                return response.data
-            })
-    },
+
 
     followDAL (id:number) {
         return  instance.post(`follow/${id}`)
@@ -50,6 +45,15 @@ export const usersAPI =  {
             })
     }
 
+}
+
+export const authAPI = {
+    setAuthUserDataDAL  () {
+        return instance.get(  `auth/me`)
+            .then(response => {
+                return response.data
+            })
+    },
 }
 
 

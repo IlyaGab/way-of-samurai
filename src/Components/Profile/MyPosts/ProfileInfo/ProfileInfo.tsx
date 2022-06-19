@@ -8,7 +8,7 @@ type ProfileInfoPropsType = {
 }
 
 const ProfileInfo = (props:ProfileInfoPropsType) => {
-    console.log(props.profile)
+
     if(!props.profile){
         return <Preloader/>
     }
@@ -22,7 +22,10 @@ const ProfileInfo = (props:ProfileInfoPropsType) => {
             </div>
 
             <div>
-                <img src={props.profile.photos.large} alt=""/>
+                <img src={props.profile.photos.large
+                    ? props.profile.photos.large
+                    : "https://html5css.ru/css/img_lights.jpg"}
+                     alt=""/>
             </div>
             <div className={classes.descriptionBlock}>
                 ava+description

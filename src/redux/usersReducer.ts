@@ -126,7 +126,6 @@ export const setFetching = (isFetching: boolean) => {
         isFetching
     } as const
 }
-
 export const setToggleFollowingProgress = (isFetching: boolean, userID: number) => {
     return {
         type: TOGGLE_FOLLOWING_IN_PROGRESS,

@@ -1,4 +1,6 @@
 import {ProfileStatePropsType} from '../Components/Profile/ProfileContainer';
+import {Dispatch} from 'redux';
+import {usersAPI} from '../API/api';
 
 export type ProfileReducerActionsType =
     ReturnType<typeof addPostActionCreator>
@@ -66,3 +68,10 @@ export const setUserProfile = (profile:ProfileStatePropsType) => {
     } as const
 }
 
+export const getUserProfile = (userID:string) => {
+    return (dispatch:Dispatch) => {
+        usersAPI.setUsers(userID).then(data => {
+            dispatch(setUserProfile(data))
+        })
+    }
+}
