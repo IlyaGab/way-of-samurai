@@ -67,10 +67,11 @@ let mapStateToProps = (state: AppStateType): ArrayUsersType => {
 }
 
 export default compose<React.ComponentType>(
-    withAuthRedirect,
+
     connect(mapStateToProps, {
         follow,
         unfollow,
         getUsersThunkCreator
     }),
+    withAuthRedirect,
 )(UsersContainer)
