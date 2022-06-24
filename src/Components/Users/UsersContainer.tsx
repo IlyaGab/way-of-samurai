@@ -8,6 +8,8 @@ import {AppStateType} from '../../redux/redux-store';
 import React from 'react';
 import UsersFunctionalComponent from './UsersFunctionalComponent';
 import Preloader from '../common/preloader/Preloader';
+import {withAuthRedirect} from '../../HOC/withAuthRedirect';
+import {compose} from 'redux';
 
 type MapStateUsersPropsType = {
     users: Array<UsersType>
@@ -64,10 +66,11 @@ let mapStateToProps = (state: AppStateType): ArrayUsersType => {
     }
 }
 
-
-export default connect(mapStateToProps, {
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {
         follow,
         unfollow,
         getUsersThunkCreator
-    }
-)(UsersContainer);
+    }),
+)(UsersContainer)
