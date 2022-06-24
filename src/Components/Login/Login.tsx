@@ -1,23 +1,18 @@
 import React from 'react';
+import {FormDataType, ReduxLoginForm} from './LoginForm';
+
+
 
 const Login = () => {
+
+    const onSubmit = (formData:FormDataType) => {
+        console.log(formData)
+    }
+
     return (
         <div>
             <h1>LOGIN</h1>
-            <form>
-                <div>
-                    <input placeholder={'Login'}/>
-                </div>
-                <div>
-                    <input placeholder={'Password'}/>
-                </div>
-                <div>
-                    <input type={'checkbox'}/>
-                </div>
-                <div>
-                    <button>Login</button>
-                </div>
-            </form>
+            <ReduxLoginForm onSubmit={onSubmit}/>
         </div>
     );
 };
