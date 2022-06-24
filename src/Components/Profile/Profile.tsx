@@ -8,12 +8,14 @@ import {ProfileStatePropsType} from './ProfileContainer';
 
 type ProfilePresentPageType = {
     profile: ProfileStatePropsType | null
+    status:string
+    updateStatus:(status:string)=>void
 }
 
 const Profile = (props:ProfilePresentPageType) => {
     return (
         <div className={clases.content}>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
             <MyPostsContainer/>
         </div>
 
