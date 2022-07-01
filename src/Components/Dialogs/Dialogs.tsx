@@ -1,8 +1,10 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import clases from './Dialogs.module.css';
 import {DialogsPageType} from './DialogsContainer';
+import {AddMessageFormTypes, ReduxAddMessageForm} from './AddMessageForm';
+
 
 
 
@@ -12,15 +14,9 @@ const Dialogs = (props: DialogsPageType) => {
 
     let dialogsElements = state.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     let messageElements = state.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>)
-    let newMessageBody = state.newMessageBody
 
-    let onSendMessageClick = () => {
-        props.sendMessage()
-    }
-
-    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value
-        props.updateNewMessageBody(body)
+    const addNewMessage = (values: AddMessageFormTypes) => {
+        props.sendMessage(values.newMessageBody)
     }
 
     return (
@@ -30,14 +26,17 @@ const Dialogs = (props: DialogsPageType) => {
             </div>
             <div className={clases.messages}>
                 <div>{messageElements}</div>
-                <textarea value={newMessageBody} onChange={onNewMessageChange}/>
                 <div>
-                    <button onClick={onSendMessageClick}> addMessage</button>
+                    <ReduxAddMessageForm onSubmit={addNewMessage}/>
                 </div>
             </div>
         </div>
 
     )
 }
+
+
+
+
 
 export default Dialogs

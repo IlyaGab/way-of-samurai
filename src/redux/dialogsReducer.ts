@@ -40,8 +40,7 @@ export const dialogsReducer = (state = initialState, action:DialogReducerActionT
         case ADD_MESSAGE:
             return {
                 ...state,
-                newMessageBody: '',
-                messages: [...state.messages, {id: 6, message: state.newMessageBody}]
+                messages: [...state.messages, {id: 6, message: action.newMessageBody}]
             }
         case UPDATE_NEW_MESSAGE:
             return {...state, newMessageBody: action.userMessage}
@@ -50,9 +49,10 @@ export const dialogsReducer = (state = initialState, action:DialogReducerActionT
     }
 }
 
-export const addMessageActionCreator = () => {
+export const addMessageActionCreator = (newMessageBody:string) => {
     return {
-        type: ADD_MESSAGE
+        type: ADD_MESSAGE,
+        newMessageBody
     } as const
 }
 
