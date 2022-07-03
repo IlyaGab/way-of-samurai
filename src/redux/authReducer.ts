@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI} from '../API/api';
 import {AppThunk} from './redux-store';
+import {FormAction, stopSubmit} from 'redux-form';
 
 
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -53,10 +54,13 @@ export const getAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
 }
 
 export const login = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+
     authAPI.login(email,password, rememberMe)
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(getAuthUserData())
+            } else {
+                dispatch(stopSubmit('login', {_error: response.data.messages}))
             }
         }
     )
