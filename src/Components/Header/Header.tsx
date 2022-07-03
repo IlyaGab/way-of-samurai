@@ -5,9 +5,11 @@ import clases from './Header.module.css'
 type HeaderTypes = {
     isAuth:boolean,
     login: string | null
+    logout: ()=>void
 }
 
 const Header = (props:HeaderTypes) => {
+
     return (
         <header className={clases.header}>
             <img
@@ -15,7 +17,9 @@ const Header = (props:HeaderTypes) => {
                 alt=""/>
 
             <div className={clases.loginBlock}>
-                {props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}
+                {props.isAuth
+                    ? <div>{props.login} - <button onClick={props.logout}>Log out</button> </div>
+                    : <NavLink to={'/login'}>Login</NavLink>}
 
             </div>
         </header>
