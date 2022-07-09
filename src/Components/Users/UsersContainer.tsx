@@ -8,7 +8,6 @@ import {AppStateType} from '../../redux/redux-store';
 import React from 'react';
 import UsersFunctionalComponent from './UsersFunctionalComponent';
 import Preloader from '../common/preloader/Preloader';
-import {withAuthRedirect} from '../../HOC/withAuthRedirect';
 import {compose} from 'redux';
 
 type MapStateUsersPropsType = {
@@ -73,5 +72,4 @@ export default compose<React.ComponentType>(
         unfollow,
         getUsersThunkCreator
     }),
-    withAuthRedirect,
 )(UsersContainer)

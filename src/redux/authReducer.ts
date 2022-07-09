@@ -1,20 +1,20 @@
 import {Dispatch} from 'redux';
 import {authAPI} from '../API/api';
 import {AppThunk} from './redux-store';
-import {FormAction, stopSubmit} from 'redux-form';
+import { stopSubmit} from 'redux-form';
 
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
 export type AuthReducerStateType = {
-    userId: number | null,
+    userId: number ,
     email: string | null,
     login: string | null,
     isAuth: boolean
 }
 
 let initialState: AuthReducerStateType = {
-    userId: null,
+    userId: 0,
     email: null,
     login: null,
     isAuth: false
@@ -43,7 +43,7 @@ export const setAuthUserData = (userId: number, email: string, login: string, is
 }) as const
 
 export const getAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
-    authAPI.me()
+   return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, email, login} = response.data.data

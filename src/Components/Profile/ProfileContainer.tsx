@@ -6,7 +6,6 @@ import {AppStateType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../HOC/withAuthRedirect';
 import {compose} from 'redux';
-import {json} from 'stream/consumers';
 
 
 
@@ -46,12 +45,12 @@ type PhotosPropsType = {
 export type mapProfileStateToPropsType = {
     profile:ProfileStatePropsType | null,
     status:string,
-    loginnedUserId:number | null,
+    loginnedUserId:number,
     isAuth:boolean
 }
 export type mapProfileDispatchToPropsType = {
-    getUserProfile: (userID:string) => void
-    getStatus: (userID:string) => void
+    getUserProfile: (userID:number) => void
+    getStatus: (userID:number) => void
     updateStatus: (status: string)=>void
 }
 
@@ -59,10 +58,12 @@ export type ProfileContainerPropsType = mapProfileStateToPropsType & mapProfileD
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-    let userId = this.props.match.params.userId
-        console.log()
+    let userId = Number(this.props.match.params.userId)
         if(!userId) {
-            userId = String(this.props.loginnedUserId)
+            userId = this.props.loginnedUserId
+            if(!userId){
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userId);
         this.props.getStatus(userId)

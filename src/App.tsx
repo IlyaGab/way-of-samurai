@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navigation from './Components/Nav/Nav';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
@@ -10,27 +10,59 @@ import Login from './Components/Login/Login';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
 import ProfileContainer from './Components/Profile/ProfileContainer';
 import UsersContainer from './Components/Users/UsersContainer';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import { initializeApp} from './redux/app-reducer';
+import {AppStateType} from './redux/redux-store';
+import Preloader from './Components/common/preloader/Preloader';
 
 
+type AppMstpType = {
+    initialized:boolean
+}
 
-function App() {
+type AppMdtpType = {
+    initializeApp: ()=>void
+}
 
-    return (
+type AppPropsType = AppMstpType & AppMdtpType
+
+
+class App extends React.Component<AppPropsType> {
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render() {
+        if(!this.props.initialized) {
+            return <Preloader/>
+        }
+        return (
             <div className="app-wrapper">
                 <HeaderContainter/>
                 <Navigation/>
                 <div className="app-wrapper-content">
-                        <Route path='/dialogs' render={()=>(<DialogsContainer   /> )} />
-                        <Route path='/profile/:userId?'  render={()=>(<ProfileContainer  />)}  />
-                        <Route path='/users' render={()=>(<UsersContainer />)}/>
-                        <Route path='/login' component={()=>(<Login />)}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/music' component={Music}/>
-                        <Route path='/settings' component={Settings}/>
-
+                    <Route path="/dialogs" render={() => (<DialogsContainer/>)}/>
+                    <Route path="/profile/:userId?" render={() => (<ProfileContainer/>)}/>
+                    <Route path="/users" render={() => (<UsersContainer/>)}/>
+                    <Route path="/login" component={() => (<Login/>)}/>
+                    <Route path="/news" component={News}/>
+                    <Route path="/music" component={Music}/>
+                    <Route path="/settings" component={Settings}/>
                 </div>
             </div>
-    );
+        );
+    }
 }
 
-export default App;
+const mstp = (state:AppStateType):AppMstpType => {
+    return {
+        initialized:state.app.initialized
+    }
+}
+
+
+export default compose<React.ComponentType>(
+    connect(mstp, {initializeApp}),
+    withRouter)
+(App);
