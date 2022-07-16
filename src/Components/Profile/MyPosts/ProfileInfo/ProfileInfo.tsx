@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './ProfileInfo.module.css'
 import Preloader from '../../../common/preloader/Preloader';
 import {ProfileStatePropsType} from '../../ProfileContainer';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 
 type ProfileInfoPropsType = {
     profile:ProfileStatePropsType | null
@@ -31,7 +31,7 @@ const ProfileInfo = (props:ProfileInfoPropsType) => {
                      alt=""/>
             </div>
             <div className={classes.descriptionBlock}>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
     )
