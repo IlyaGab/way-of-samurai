@@ -5,7 +5,7 @@ import {profileAPI} from '../API/api';
 export type ProfileReducerActionsType =
     ReturnType<typeof addPostActionCreator>
     & ReturnType<typeof setUserProfile>
-    & ReturnType<typeof setStatus>
+    & ReturnType<typeof setStatusAC>
 
 export type PostType = {
     id: number
@@ -66,7 +66,7 @@ export const setUserProfile = (profile: ProfileStatePropsType) => {
     } as const
 }
 
-export const setStatus = (status: string) => {
+export const setStatusAC = (status: string) => {
     return {
         type: SET_STATUS,
         status
@@ -78,7 +78,7 @@ export const setStatus = (status: string) => {
 export const getStatus = (userId: string) => {
     return (dispatch: Dispatch) => {
         profileAPI.getStatus(userId).then(response => {
-            dispatch(setStatus(response.data))
+            dispatch(setStatusAC(response.data))
         })
     }
 }
@@ -88,7 +88,7 @@ export const updateStatus = (status: string) => {
         profileAPI.updateStatus(status)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(setStatus(status))
+                    dispatch(setStatusAC(status))
                 }
             })
     }
